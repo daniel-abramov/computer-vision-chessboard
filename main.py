@@ -1,7 +1,9 @@
+import logging
 import numpy as np
 import cv2
 
-capture = cv2.VideoCapture(0)
+capture = cv2.VideoCapture(1)
+criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001);
 
 while (True):
     # Capture frame-by-frame
@@ -11,10 +13,18 @@ while (True):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
     # Display the resulting frame
-    cv2.imshow('frame', gray)
-    # cv2.imshow('frame', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+
+    ret, corners = cv2.findChessboardCorners(gray, (7,7), None);
+    if ret == True:
+        cv2.cornerSubPix(gray, corners, (11,11), (-1,-1), criteria)
+        cv2.drawChessboardCorners(frame, (7,7), corners, ret)
+
+    print ret
+    cv2.imshow('gray-img', gray)
+    cv2.imshow('color-img', frame)
+
 
 # When everything done, release the capture
 capture.release()
