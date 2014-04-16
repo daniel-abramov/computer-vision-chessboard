@@ -1,10 +1,18 @@
 #!/usr/bin/env python
 
+import sys
 import numpy as np
 import cv2
 
-# photo = cv2.imread("chess-demo-bord-wood2-500x500.jpg")
-photo = cv2.imread("500x500_1.jpg")
+
+if (len(sys.argv) > 1):
+    image_name = sys.argv[1]
+    print image_name
+else:
+    print "You haven't passed the image name"
+    sys.exit()
+
+photo = cv2.imread(image_name)
 cv2.imshow("Original", photo)
 
 bwphoto = cv2.cvtColor(photo, cv2.COLOR_BGR2GRAY)
