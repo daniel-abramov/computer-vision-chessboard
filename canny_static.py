@@ -22,8 +22,8 @@ canny = cv2.Canny(bwphoto, 200, 250)
 cv2.imshow("Canny", canny)
 
 def line_ok(rho, theta):
-    if abs(rho - 250) > 200:
-        return False
+    # if abs(rho - 250) > 200:
+        # return False
     tol = 5 * np.pi / 180
     if theta <= tol or theta >= (np.pi - tol):
         return True

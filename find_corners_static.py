@@ -4,9 +4,18 @@ import sys
 import numpy as np
 import cv2
 
+rows = 7
+columns = 7
+
 if (len(sys.argv) > 1):
     image_name = sys.argv[1]
     print image_name
+
+    if (len(sys.argv) == 3):
+        dimensions = sys.argv[2]
+        rows = int(dimensions[0])
+        columns = int(dimensions[2])
+
 else:
     print "You haven't passed the image name"
     sys.exit()
@@ -25,10 +34,11 @@ normalized = (grayscale - minimum) * (255 / (maximum - minimum))
 
 cv2.imshow("Normalized", normalized)
 
-ret, corners = cv2.findChessboardCorners(normalized, (7,7), None)
+print 'rows = {0}, columns = {1}'.format(rows, columns)
+ret, corners = cv2.findChessboardCorners(normalized, (rows,columns), None)
 if ret == True:
     print "Chessboard corners has been detected"
-    cv2.drawChessboardCorners(photo, (7,7), corners, ret)
+    cv2.drawChessboardCorners(photo, (rows,columns), corners, ret)
 else:
     print "Chessboard corners has not been detected"
 

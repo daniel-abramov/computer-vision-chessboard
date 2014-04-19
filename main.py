@@ -16,13 +16,18 @@ while (True):
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-    ret, corners = cv2.findChessboardCorners(gray, (7,7), None);
+    minimum = np.min(gray)
+    maximum = np.max(gray)
+    normalized = (gray - minimum) * (255 / (maximum - minimum))
+
+    ret, corners = cv2.findChessboardCorners(normalized, (7,7), None);
     if ret == True:
-        cv2.cornerSubPix(gray, corners, (11,11), (-1,-1), criteria)
+        # cv2.cornerSubPix(gray, corners, (11,11), (-1,-1), criteria)
         cv2.drawChessboardCorners(frame, (7,7), corners, ret)
 
     print ret
     cv2.imshow('gray-img', gray)
+    cv2.imshow('normalized-img', normalized)
     cv2.imshow('color-img', frame)
 
 

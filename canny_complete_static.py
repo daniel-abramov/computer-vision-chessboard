@@ -22,7 +22,7 @@ maximum = np.max(bwphoto)
 bwphoto = (bwphoto - minimum) * (255 / (maximum - minimum))
 cv2.imshow("Normalized", bwphoto)
 
-canny = cv2.Canny(bwphoto, 50, 350)
+canny = cv2.Canny(bwphoto, 20, 350)
 cv2.imshow("Canny", canny)
 
 cv2.waitKey()
@@ -31,7 +31,7 @@ width, height = bwphoto.shape
 half_size = width / 2
 
 def line_ok(rho, theta):
-    if abs(rho - half_size) > 200:
+    if abs(rho - half_size) > 100:
         return False
     tol = 5 * np.pi / 180
     if theta <= tol or theta >= (np.pi - tol):
