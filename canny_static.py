@@ -23,7 +23,7 @@ maximum = np.max(bwphoto)
 bwphoto = (bwphoto - minimum) * (255 / (maximum - minimum))
 cv2.imshow("Normalized", bwphoto)
 
-canny = cv2.Canny(bwphoto, 200, 250)
+canny = cv2.Canny(bwphoto, 150, 200)
 cv2.imshow("Canny", canny)
 
 def line_ok(rho, theta):
@@ -39,7 +39,7 @@ def line_ok(rho, theta):
 seen_lines = [ ]
 def line_duplicate(rho, theta):
     global seen_lines
-    dtol = 5
+    dtol = 25
     atol = 5 * np.pi / 180
     for (r, t) in seen_lines:
         if abs(rho - r) <= dtol and abs(theta - t) <= atol:

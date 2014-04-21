@@ -4,9 +4,15 @@ import sys
 import numpy as np
 import cv2
 
+DEBUG = False
+
 if (len(sys.argv) > 1):
     image_name = sys.argv[1]
     print image_name
+
+    if (len(sys.argv) > 2):
+        if (sys.argv[2]) != 0:
+            DEBUG = True
 else:
     print "You haven't passed the image name"
     sys.exit()
@@ -22,17 +28,17 @@ maximum = np.max(bwphoto)
 bwphoto = (bwphoto - minimum) * (255 / (maximum - minimum))
 cv2.imshow("Normalized", bwphoto)
 
-canny = cv2.Canny(bwphoto, 20, 350)
+# canny = cv2.Canny(bwphoto, 20, 350)
+canny = cv2.Canny(bwphoto, 100, 200)
 cv2.imshow("Canny", canny)
 
-cv2.waitKey()
 
 width, height = bwphoto.shape
 half_size = width / 2
 
 def line_ok(rho, theta):
-    if abs(rho - half_size) > 200:
-        return False
+    # if abs(rho - half_size) > 200:
+        # return False
     tol = 5 * np.pi / 180
     if theta <= tol or theta >= (np.pi - tol):
         return True
@@ -43,7 +49,7 @@ def line_ok(rho, theta):
 seen_lines = [ ]
 def line_duplicate(rho, theta):
     global seen_lines
-    dtol = 5
+    dtol = 25
     atol = 5 * np.pi / 180
     for (r, t) in seen_lines:
         if abs(rho - r) <= dtol and abs(theta - t) <= atol:
@@ -71,6 +77,8 @@ verticals.sort()
 
 print(len(horizontals))
 print(len(verticals))
+
+cv2.waitKey()
 
 upper = horizontals[0]
 lower = horizontals[8]
