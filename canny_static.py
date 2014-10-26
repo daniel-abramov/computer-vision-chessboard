@@ -23,7 +23,7 @@ maximum = np.max(bwphoto)
 bwphoto = (bwphoto - minimum) * (255 / (maximum - minimum))
 cv2.imshow("Normalized", bwphoto)
 
-canny = cv2.Canny(bwphoto, 150, 200)
+canny = cv2.Canny(bwphoto, 100, 200)
 cv2.imshow("Canny", canny)
 
 def line_ok(rho, theta):

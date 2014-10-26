@@ -59,6 +59,10 @@ def line_duplicate(rho, theta):
 
 lines = cv2.HoughLines(canny, 1, np.pi/180, 120)
 final_lines = [ ]
+
+# lines_to_sort = lines[0][:]
+# lines_to_sort.sort(key = lambda (rho, theta): abs(rho - half_size))
+
 for rho, theta in lines[0]:
     if line_ok(rho, theta):
         if not line_duplicate(rho, theta):
